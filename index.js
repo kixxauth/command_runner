@@ -1,7 +1,9 @@
 // Start by requiring IOU to shim up the Promise constructor.
-require('iou');
 
-var PROC = require('child_process');
+var
+PROC    = require('child_process'),
+Promise = require('iou').Promise;
+
 
 exports.exec = function exec(command, options) {
   options = options || Object.create(null);
