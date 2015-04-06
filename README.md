@@ -20,11 +20,11 @@ __Example:__
         console.log('errorMessage: %s', res.errorMessage); // undefined
     });
 
-command_runner.exec() is basically unchanged from the underlying child_process.exec() function. It always sets the exitCode and exitSignal, even if there is no error (to 0 and null, respectively).
+command_runner.exec() always sets the exitCode and exitSignal, even if there is no error (to 0 and null, respectively), where the native Node.js child_process.exec() does not set them unless there is an error.
 
 ### .spawn()
 __Example:__
-Running the same command above, in a different way. The difference is that a shell is not invoked in this case.
+Running the same command above, in a different way. The important distinction is that a shell is not invoked with spawn().
 
     var CR = require('command_runner');
     CR.spawn('ls', ['a', 'l']).then(function (res) {
