@@ -47,6 +47,10 @@ exports.exec = function exec(command) {
           exitCode: {
             enumerable: true,
             value: 0
+          },
+          exitSignal: {
+            enumerable: true,
+            value: null
           }
         });
       }

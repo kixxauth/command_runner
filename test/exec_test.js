@@ -113,8 +113,8 @@ module.exports = {
       return test.done();
     },
 
-    "exitSignal is undefined": function (test) {
-      test.strictEqual(typeof this.exitSignal, 'undefined');
+    "exitSignal is null": function (test) {
+      test.strictEqual(this.exitSignal, null);
       return test.done();
     },
 
