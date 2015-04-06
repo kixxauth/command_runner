@@ -6,9 +6,10 @@ Promise = require('iou').Promise;
 
 
 exports.exec = function exec(command) {
-  var promise, child;
+  var promise;
   promise = new Promise(function (resolve) {
-    child = PROC.exec(command, function (err, stdout, stderr) {
+    PROC.exec(command, function (err, stdout, stderr) {
+      var
       res = Object.create(null);
       Object.defineProperties(res, {
         stdout: {
@@ -43,5 +44,55 @@ exports.exec = function exec(command) {
 };
 
 
-exports.spawn = function spawn() {
+exports.spawn = function spawn(command, args, options) {
+  if (Array.isArray(args)) {
+    args = args.slice(0);
+  } else {
+    options = args || Object.create(null);
+    args = [];
+  }
+
+  var
+  promise = new Promise(function (resolve, reject) {
+    var
+    child,
+    stdout = '',
+    stderr = '',
+    res = Object.create(null);
+
+    child = PROC.spawn(command, args, options);
+    child.on('error', reject);
+    child.on('exit', function (code, signal) {
+      Object.defineProperties(res, {
+        exitCode: {
+          enumerable: true,
+          value: code
+        },
+        exitSignal: {
+          enumerable: true,
+          value: signal || null
+        }
+      });
+    });
+    child.on('close', function(code) {
+      Object.defineProperties(res, {
+        stdout: {
+          enumerable: true,
+          value: stdout
+        },
+        stderr: {
+          enumerable: true,
+          value: stderr
+        }
+      });
+      return resolve(res);
+    });
+    child.stdout.on('data', function (chunk) {
+      stdout += chunk;
+    });
+    child.stderr.on('data', function (chunk) {
+      stderr += chunk;
+    });
+  });
+  return promise;
 };
