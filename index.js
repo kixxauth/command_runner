@@ -5,8 +5,7 @@ PROC    = require('child_process'),
 Promise = require('iou').Promise;
 
 
-exports.exec = function exec(command, options) {
-  options = options || Object.create(null);
+exports.exec = function exec(command) {
   var promise, child;
   promise = new Promise(function (resolve) {
     child = PROC.exec(command, function (err, stdout, stderr) {
@@ -41,4 +40,8 @@ exports.exec = function exec(command, options) {
     });
   });
   return promise;
+};
+
+
+exports.spawn = function spawn() {
 };
