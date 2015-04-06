@@ -11,18 +11,16 @@ exports.exec = function exec(command) {
     PROC.exec(command, function (err, stdout, stderr) {
       var
       res = Object.create(null);
-      Object.defineProperties(res, {
-        stdout: {
-          enumerable: true,
-          value: stdout
-        },
-        stderr: {
-          enumerable: true,
-          value: stderr
-        }
-      });
       if (err) {
         Object.defineProperties(res, {
+          stdout: {
+            enumerable: true,
+            value: stdout
+          },
+          stderr: {
+            enumerable: true,
+            value: stderr
+          },
           errorMessage: {
             enumerable: true,
             value: err.message
@@ -34,6 +32,21 @@ exports.exec = function exec(command) {
           exitSignal: {
             enumerable: true,
             value: err.signal
+          }
+        });
+      } else {
+        Object.defineProperties(res, {
+          stdout: {
+            enumerable: true,
+            value: stdout
+          },
+          stderr: {
+            enumerable: true,
+            value: stderr
+          },
+          exitCode: {
+            enumerable: true,
+            value: 0
           }
         });
       }

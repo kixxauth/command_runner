@@ -104,7 +104,7 @@ module.exports = {
     },
 
     "it has a success exitCode": function (test) {
-      test.ok(!this.exitCode);
+      test.strictEqual(this.exitCode, 0);
       return test.done();
     },
 
