@@ -5,10 +5,10 @@ PROC    = require('child_process'),
 Promise = require('iou').Promise;
 
 
-exports.exec = function exec(command) {
+exports.exec = function exec(command, options) {
   var promise;
   promise = new Promise(function (resolve) {
-    PROC.exec(command, function (err, stdout, stderr) {
+    PROC.exec(command, options, function (err, stdout, stderr) {
       var
       res = Object.create(null);
       if (err) {
